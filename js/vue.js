@@ -3,6 +3,7 @@
  * (c) 2014-2019 Evan You
  * Released under the MIT License.
  */
+
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -85,8 +86,7 @@
   function isPromise (val) {
     return (
       isDef(val) &&
-      typeof val.then === 'function' &&
-      typeof val.catch === 'function'
+      typeof val.then === 'function' && typeof val.catch === 'function'
     )
   }
 
