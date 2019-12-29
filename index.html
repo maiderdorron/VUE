@@ -105,7 +105,7 @@
                     <h4>Teléfono</h4>
                 </div>
             </div>
-            <div v-for="c in reversedContactos" class="row">
+            <div v-for="(c,index) in reversedContactos" class="row">
                 <div class="col-xs-4">
                     {{ c.nombre }}
                 </div>
@@ -116,7 +116,7 @@
                     {{ c.telf }}
                 </div>
                 <div class="col-xs-4">
-                      <button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></button>
+                      <button @click="deleteItem(index)" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></button>
                 </div>
             </div>
             </div>
@@ -145,29 +145,28 @@
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Nombre</label>
-                                <input type="text" class="form-control" placeholder="Nombre" id="name">
+                                <input v-model="newContacto.nombre" type="text" class="form-control" placeholder="Nombre" id="nombre">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Email</label>
-                                <input type="email" class="form-control" placeholder="Email" id="email">
+                                <input v-model="newContacto.email" type="email" class="form-control" placeholder="Email" id="email">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Teléfono</label>
-                                <input type="tel" class="form-control" placeholder="Número de teléfono" id="phone">
-                                <p class="help-block text-danger"></p>
+                                <input v-model="newContacto.telf" type="telf" class="form-control" placeholder="Número de teléfono" id="telf" @keyup.enter="saveLanguage">
                             </div>
                         </div>
                         <br>
                         <div id="success"></div>
                         <div class="row">
                             <div class="form-group col-xs-12">
-                                <button type="submit" class="btn btn-success btn-lg">Añadir</button>
+                                <button v-on:click="saveContacto" class="btn btn-success btn-lg">Añadir</button>
                             </div>
                         </div>
                     </form>
@@ -237,20 +236,39 @@
     var app = new Vue({
     el:'#app',
     data:{
+            newContacto: {
+                    nombre:'',
+                    email:'',
+                    telf: ''
+            },
             lista_Contactos:[
                 {
                     nombre:'John Doe',
                     email:'john.doe@deusto.es',
                     telf: '555555555'
                 },
-
             ]
+
+            
         },
     computed:{
         reversedContactos() {
             return this.lista_Contactos.slice(0).reverse();
         }
     },
+    methods:{
+        deleteEvent: function(event) {
+            this.lista_Contactos.splice(this.events.indexOf(event), 1);
+        },
+        saveContacto: function(event){
+            this.lista_Contactos.push( { nombre: this.nombre, email: this.email, telf: this.telf } );
+            this.newContacto.nombre = "";
+            this.newContacto.email = "";
+            this.newContacto.telf = "";
+
+
+        }
+        }
     })
     </script>
 </html>
