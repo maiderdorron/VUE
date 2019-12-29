@@ -32,7 +32,7 @@
 </head>
 
 <body id="page-top" class="index">
-
+<div id="app">
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -105,15 +105,15 @@
                     <h4>Teléfono</h4>
                 </div>
             </div>
-            <div class="row">
+            <div v-for="c in reversedContactos" class="row">
                 <div class="col-xs-4">
-                    <p>John Doe</p>
+                    {{ c.nombre }}
                 </div>
                 <div class="col-xs-4">
-                    <p>john.doe@deusto.es</p>
+                    {{ c.email }}
                 </div>
                 <div class="col-xs-4">
-                    <p>555555555</p>
+                    {{ c.telf }}
                 </div>
                 <div class="col-xs-4">
                       <button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></button>
@@ -121,7 +121,7 @@
             </div>
             </div>
             <div>
-              <div class="row">
+              <div v-if="lista_Contactos.length === 0" class="row">
                   <div class="col-xs-12">
                       <p>No se ha encontrado ningún contacto.</p>
                   </div>
@@ -167,7 +167,7 @@
                         <div id="success"></div>
                         <div class="row">
                             <div class="form-group col-xs-12">
-                                <button  @click="saveContacto" type="submit" class="btn btn-success btn-lg">Añadir</button>
+                                <button type="submit" class="btn btn-success btn-lg">Añadir</button>
                             </div>
                         </div>
                     </form>
@@ -217,33 +217,6 @@
         </a>
     </div>
 
-    <script type="text/javascript">
-    var app4 = new Vue({
-    el:'#app',
-    data:{
-           
-            newNombre:'',
-            newEmail:'',
-            newNumero:'',
-            Nom_contactos:[ 
-            ]
-            Email_contactos:[ 
-            ]
-            Num_contactos:[ 
-            ]
-
-
-           
-        },
-        methods:{
-        saveContacto: function(event){
-            this.languages.push( { label: this.newLanguage} );
-            this.newLanguage = "";
-        },
- 
-    })
-    </script>
-
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
@@ -257,8 +230,27 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/freelancer.js"></script>
-    <script src="https://cdn.jsdelivr.net/ npm vue dist /vue.js"></script>
-
+</div>
 </body>
 
+<script type="text/javascript">
+    var app = new Vue({
+    el:'#app',
+    data:{
+            lista_Contactos:[
+                {
+                    nombre:'John Doe',
+                    email:'john.doe@deusto.es',
+                    telf: '555555555'
+                },
+
+            ]
+        },
+    computed:{
+        reversedContactos() {
+            return this.lista_Contactos.slice(0).reverse();
+        }
+    },
+    })
+    </script>
 </html>
